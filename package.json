@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/42seoul"
+    "start": "node ./bin/qrcheckin"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -18,7 +18,7 @@
     "morgan": "~1.9.1",
     "mysql2": "^2.2.5",
     "passport": "^0.4.1",
-    "passport-42": "^1.2.6",
+    "passport-google-oauth20": "^2.0.0",
     "qrcode": "^1.4.4",
     "sequelize": "^6.6.2",
     "sqlite3": "^5.0.2"

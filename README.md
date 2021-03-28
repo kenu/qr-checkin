@@ -1,4 +1,4 @@
-# Seoul42 Cadet
+# QR Checkin
 
 ```bash
 $ git clone https://github.com/kenu/qr-checkin
@@ -6,8 +6,8 @@ $ cd qr-checkin
 $ npm install
 ```
 
-* Register [an app](https://profile.intra.42.fr/oauth/applications) on 42 intra
-and set the redirect URI to `http://localhost:4200/login/42/return`.
+* Register [an app](https://console.cloud.google.com/apis/dashboard) on Google console
+and set the redirect URI to `http://localhost:3000/return`.
 
 * Copy `.env.sample` to `.env` and edit CLIENT_ID and CLIENT_SECRET info.
 
@@ -18,13 +18,10 @@ $ npm run start
 ```
 
 * Open a web browser and navigate to
-[http://localhost:4200/](http://localhost:4200/)
+[http://localhost:3000/](http://localhost:3000/)
 to see the example in action.
 
 <img src="./public/images/qr-checkin.png" style="width: 400px;">
-
-## 42 API List
-* [API List](./docs/42api.md)
 
 ## 이 문서의 저작권
 
