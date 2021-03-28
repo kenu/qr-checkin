@@ -18,7 +18,7 @@ passport.use(new GoogleStrategy({
   clientID: process.env['GOOGLE_CLIENT_ID'],
   clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
   callbackURL: '/return',
-  scope: 'profile'
+  scope: ['email', 'profile']
 },
   function (accessToken, refreshToken, profile, cb) {
     console.log('accessToken', accessToken);
@@ -57,7 +57,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', ensureLoggedIn(), async function (req, res) {
-  const data = (req.user) ? req.user.displayName : '';
+  const data = (req.user) ? req.user.emails[0].value : '';
   const url = await getDataUrl(data);
   res.render('home', { user: req.user, dataurl: url });
 });

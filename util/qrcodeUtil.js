@@ -1,5 +1,5 @@
 const QRCode = require('qrcode');
-const { encrypt,decrypt } = require('./cryptoUtil');
+const { encrypt } = require('./cryptoUtil');
 
 module.exports = async function getDataUrl(data) {
   if (!data) {
