@@ -57,8 +57,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', ensureLoggedIn(), async function (req, res) {
-  console.log(req);
-  const data = (req.user) ? req.user.name : '';
+  const data = (req.user) ? req.user.displayName : '';
   const url = await getDataUrl(data);
   res.render('home', { user: req.user, dataurl: url });
 });
@@ -88,9 +87,9 @@ app.get('/profile',
 app.post('/register',
   async function (req, res) {
     const data = decrypt(req.body.data);
-    console.log('p__', data);
     if (data) {
       const row = data.split('|');
+      console.log(row);
       if (row.length < 2) {
         res.send({ success: false, message: 'Login Again!' });
         return;

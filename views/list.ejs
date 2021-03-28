@@ -10,7 +10,7 @@
   };
   const format = (date, locale) => new Intl.DateTimeFormat(locale, options).format(date);
   list.forEach(row => { %>
-    <li><%= format(row.created, 'ko') %> <%= row.username %></li>
+    <li><%= format(row.created, 'ko') %> <%= JSON.stringify(row.username) %></li>
   <% }) %>
 </ul>
 <%- include('./footer.ejs') %>
