@@ -1,8 +1,8 @@
 # Seoul42 Cadet
 
 ```bash
-$ git clone https://github.com/innovationacademy-kr/42-qr-checkin
-$ cd 42-qr-checkin
+$ git clone https://github.com/kenu/qr-checkin
+$ cd qr-checkin
 $ npm install
 ```
 
