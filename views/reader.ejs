@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
     <title>QR Checker</title>
-    <script src="./jsQR.js"></script>
+    <script src="/jsQR.js"></script>
     <link
       href="https://fonts.googleapis.com/css?family=Ropa+Sans"
       rel="stylesheet"
@@ -54,7 +54,7 @@
 
       async function sendData(data) {
         if (data) {
-          const response = await fetch("/register", {
+          const response = await fetch("/attends", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ data }),

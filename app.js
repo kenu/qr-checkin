@@ -64,8 +64,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", rootRouter);
-//TODO: /attends로 변경해야함.
-app.use("/register", attendRouter);
+app.use("/attends", attendRouter);
 // app.use("/events", eventsRouter);
 
 /*
@@ -75,42 +74,11 @@ app.get("/profile", ensureLoggedIn(), async function (req, res) {
   res.render("profile", { user: req.user, dataurl: url });
 });
 
-app.post("/register", async function (req, res) {
-  const data = decrypt(req.body.data);
-  if (data) {
-    const row = data.split("|");
-    console.log(row);
-    if (row.length < 2) {
-      res.send({ success: false, message: "Login Again!" });
-      return;
-    }
-    const record = {
-      event: process.env.EVENT_NAME || "202103os",
-      username: row[1],
-      created: new Date(Number(row[0])),
-    };
-    let result = {};
-    try {
-      result = await Attend.save(record);
-    } catch (err) {
-      result = { success: false, message: err.message };
-    }
-    res.end(JSON.stringify(result));
-  } else {
-    res.send({ success: false, message: "Invalid Data." });
-  }
-});
-
 */
 
 app.get("/reader", function (req, res) {
   res.render("reader");
 });
-
-// app.get("/Ilist", async function (req, res) {
-//   const list = await Attend.findAll();
-//   res.render("list", { list });
-// });
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
