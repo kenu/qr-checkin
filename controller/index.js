@@ -1,5 +1,5 @@
 module.exports = {
-  rootController: require("./root"),
-  // attendController: require("./attend"),
+  rootController: require("./rootController"),
+  attendController: require("./attendController"),
   // eventController: require("./event"),
 };
