@@ -21,7 +21,7 @@ let eventController = {
     }
   },
 
-  qrReader: async (req, res) => {
+  qrReader: (req, res) => {
     res.render("reader", { eventId: req.params.id });
   },
 
@@ -29,13 +29,24 @@ let eventController = {
   //   res.render("event/editForm", { eventId: req.params.id });
   // },
 
-  createForm: async (req, res) => {
+  createForm: (req, res) => {
     res.render("event/createForm");
   },
 
   // deleteForm: async (req, res) => {
   //   res.render("event/deleteForm", { eventId: req.params.id });
   // },
+
+  validateEventId: async (req, res, next) => {
+    event_count = await Event.count({ where: { id: parseInt(req.params.id) } });
+    if (event_count < 1) {
+      res.status(400);
+      result = { success: false, message: "Invalid EventId" };
+      res.end(JSON.stringify(result));
+    } else {
+      next();
+    }
+  },
 };
 
 module.exports = {
@@ -46,4 +57,6 @@ module.exports = {
   editForm: eventController.editForm,
   createForm: eventController.createForm,
   deleteForm: eventController.deleteForm,
+
+  validateEventId: eventController.validateEventId,
 };

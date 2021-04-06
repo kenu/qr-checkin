@@ -3,7 +3,11 @@ const router = express.Router();
 const { eventController } = require("../controller");
 
 router.get("", eventController.index);
-router.get("/:id/reader", eventController.qrReader);
+router.get(
+  "/:id/reader",
+  eventController.validateEventId,
+  eventController.qrReader
+);
 
 router.post("", eventController.create);
 // router.patch("", eventController.update);
