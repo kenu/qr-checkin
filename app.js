@@ -63,6 +63,20 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(passport.initialize());
 app.use(passport.session());
 
+// connect To DB and create tables if they does not exists.
+const models = require("./models");
+models.sequelize
+  .sync()
+  .then(() => {
+    console.log("DB connection success~!");
+  })
+  .catch((err) => {
+    console.error(err);
+    console.log("DB connection failed. Please make sure DB is running.");
+    process.exit();
+  });
+
+// Routes
 app.use("/", rootRouter);
 app.use("/attends", attendRouter);
 // app.use("/events", eventsRouter);
