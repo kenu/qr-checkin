@@ -1,0 +1,22 @@
+<%- include('./header.ejs') %>
+<h1>Events</h1>
+<button><a href="/events/create">이벤트 추가</a></button>
+<ul>
+  <% options = { year: 'numeric', month: 'numeric', day: 'numeric', hour:
+  'numeric', minute: 'numeric', second: 'numeric', hour12: false, timeZone:
+  'Asia/Seoul' }; const format = (date, locale) => new
+  Intl.DateTimeFormat(locale, options).format(date); eventList.forEach(row => {
+  %>
+  <!-- <li><%= format(row.created, 'ko') %> <%= JSON.stringify(row.title) %></li> -->
+  <li>
+    <p>
+      <%= JSON.stringify(row.title) %> | <%= format(row.date) %>
+      <!-- <button><a href="/events/<%= row.id %>/edit">수정</a></button>
+      <button><a href="/events/<%= row.id %>/delete">삭제</a></button> -->
+      <button><a href="/events/<%= row.id %>/reader">QRreader</a></button>
+    </p>
+  </li>
+  <% }) %>
+</ul>
+
+<%- include('./footer.ejs') %>

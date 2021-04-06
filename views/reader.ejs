@@ -20,6 +20,7 @@
     <div id="output" hidden>
       <div id="outputMessage" class="direction">Scan your QR Code</div>
     </div>
+    <div id="eventId" data-event-id="<%= eventId %>"></div>
     <script>
       var video = document.createElement("video");
       var canvasElement = document.getElementById("canvas");
@@ -53,11 +54,17 @@
       }
 
       async function sendData(data) {
+        let eventId = document
+          .getElementById("eventId")
+          .getAttribute("data-event-id");
         if (data) {
           const response = await fetch("/attends", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ data }),
+            body: {
+              data: JSON.stringify({ data }),
+              eventId: eventId,
+            },
           });
           const result = await response.json();
           if (result.success) {

@@ -16,8 +16,9 @@ let attendController = {
         res.send({ success: false, message: "Login Again!" });
         return;
       }
+      // event: process.env.EVENT_NAME || "202103os",
       const record = {
-        event: process.env.EVENT_NAME || "202103os",
+        eventId: req.body.id,
         username: row[1],
         created: new Date(Number(row[0])),
       };
