@@ -4,18 +4,21 @@ module.exports = (sequelize, DataTypes) => {
   class Attend extends Model {
     static associate(models) {
       // define association here
+      this.belongsTo(models.Event, {
+        foreignKey: "eventId",
+        targetKey: "id",
+      });
     }
   }
 
   Attend.init(
     {
-      event: DataTypes.STRING,
+      eventId: DataTypes.INTEGER,
       username: DataTypes.STRING,
-      created: DataTypes.DATE,
     },
     {
       sequelize,
-      modelName: "attend",
+      modelName: "Attend",
     }
   );
 
