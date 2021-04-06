@@ -1,5 +1,5 @@
 const { decrypt } = require("../util/cryptoUtil");
-const Attend = require("../models").attend;
+const Attend = require("../models").Attend;
 
 let attendController = {
   index: async function (req, res) {
@@ -18,7 +18,7 @@ let attendController = {
       }
       // event: process.env.EVENT_NAME || "202103os",
       const record = {
-        eventId: req.body.id,
+        eventId: parseInt(req.body.eventId),
         username: row[1],
         created: new Date(Number(row[0])),
       };

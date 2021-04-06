@@ -54,17 +54,21 @@
       }
 
       async function sendData(data) {
-        let eventId = document
+        const eventId = document
           .getElementById("eventId")
           .getAttribute("data-event-id");
         if (data) {
+          body = {
+            data: JSON.stringify({ data }),
+            eventId: eventId,
+          };
           const response = await fetch("/attends", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: {
-              data: JSON.stringify({ data }),
+            body: JSON.stringify({
+              data: data,
               eventId: eventId,
-            },
+            }),
           });
           const result = await response.json();
           if (result.success) {

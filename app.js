@@ -8,11 +8,6 @@ const bodyParser = require("body-parser");
 
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-// const ensureLoggedIn = require("connect-ensure-login").ensureLoggedIn;
-
-// const getDataUrl = require("./util/qrcodeUtil");
-// const { decrypt } = require("./util/cryptoUtil");
-// const Attend = require("./store/Attend.js");
 
 const rootRouter = require("./route/rootRouter");
 const attendRouter = require("./route/attendRouter");
@@ -89,10 +84,6 @@ app.get("/profile", ensureLoggedIn(), async function (req, res) {
 });
 
 */
-
-// app.get("/reader", function (req, res) {
-//   res.render("reader");
-// });
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

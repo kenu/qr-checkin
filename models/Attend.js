@@ -25,9 +25,8 @@ module.exports = (sequelize, DataTypes) => {
   Attend.save = async function save(attend) {
     await sequelize.sync();
     const result = await Attend.findAll({
-      where: { event: attend.event, username: attend.username },
+      where: { eventId: attend.eventId, username: attend.username },
     });
-    console.log(result);
     if (result.length === 0) {
       const result2 = await Attend.create(attend);
       return result2;
