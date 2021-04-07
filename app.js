@@ -15,20 +15,20 @@ const { decrypt } = require('./util/cryptoUtil');
 const Attend = require('./store/Attend.js');
 
 passport.use(new GoogleStrategy({
-  clientID: process.env['GOOGLE_CLIENT_ID'],
-  clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: '/return',
   scope: ['email', 'profile']
 },
-  function (accessToken, refreshToken, profile, cb) {
-    console.log('accessToken', accessToken);
-    // In this example, the user's Facebook profile is supplied as the user
-    // record.  In a production-quality application, the Facebook profile should
-    // be associated with a user record in the application's database, which
-    // allows for account linking and authentication with other identity
-    // providers.
-    return cb(null, profile);
-  }));
+function (accessToken, refreshToken, profile, cb) {
+  console.log('accessToken', accessToken);
+  // In this example, the user's Facebook profile is supplied as the user
+  // record.  In a production-quality application, the Facebook profile should
+  // be associated with a user record in the application's database, which
+  // allows for account linking and authentication with other identity
+  // providers.
+  return cb(null, profile);
+}));
 
 passport.serializeUser(function (user, cb) {
   cb(null, user);
@@ -134,7 +134,7 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
