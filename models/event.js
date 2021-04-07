@@ -14,6 +14,24 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: "id",
       });
     }
+    getDateTimeFormatting() {
+      function pad2(n) {
+        return n < 10 ? "0" + n : n;
+      }
+
+      const dt = this.date;
+      return (
+        dt.getFullYear().toString() +
+        "-" +
+        pad2(dt.getMonth() + 1) +
+        "-" +
+        pad2(dt.getDate()) +
+        "T" +
+        pad2(dt.getHours()) +
+        ":" +
+        pad2(dt.getMinutes())
+      );
+    }
   }
 
   Event.init(
@@ -26,5 +44,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Event",
     }
   );
+
   return Event;
 };
