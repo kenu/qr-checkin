@@ -1,0 +1,44 @@
+<%- include('../header.ejs') %>
+<h1>Edit</h1>
+
+<label>Title</label>
+<input
+  id="title"
+  type="text"
+  name="title"
+  value="<%= title%>"
+  data-eventId="<%= id %>"
+/>
+<label>Date</label>
+<input
+  id="datetime"
+  type="datetime-local"
+  name="datetime"
+  value="<%= datetime %>"
+/>
+<button type="submit" onclick="formPatchRequest()">Submit</button>
+<a href="/events"><button>Back</button></a>
+
+<%- include('../footer.ejs') %>
+
+<script>
+  function formPatchRequest() {
+    const url = "/events/" + document.getElementById("title").dataset.eventid;
+    const req = new Request(url, {
+      method: "PATCH",
+      headers: new Headers({
+        "content-type": "application/json",
+      }),
+      body: JSON.stringify({
+        title: document.getElementById("title").value,
+        date: document.getElementById("datetime").value,
+      }),
+    });
+
+    fetch(req)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.redirectUrl) window.location.href = data.redirectUrl;
+      });
+  }
+</script>

@@ -10,11 +10,15 @@ router.get(
 );
 
 router.post("", eventController.create);
-// router.patch("", eventController.update);
-// router.delete("", eventController.delete);
+router.patch("/:id", eventController.update);
+router.delete("/:id", eventController.delete);
 
-// router.get("/:id/editForm", eventController.editForm);
+router.get("/:id/editForm", eventController.editForm);
 router.get("/createForm", eventController.createForm);
-// router.get("/:id/deleteForm", eventController.deleteForm);
+router.get(
+  "/:id/deleteForm",
+  eventController.validateEventId,
+  eventController.deleteForm
+);
 
 module.exports = router;

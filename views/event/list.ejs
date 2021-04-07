@@ -1,4 +1,4 @@
-<%- include('./header.ejs') %>
+<%- include('../header.ejs') %>
 <h1>Events</h1>
 <button><a href="/events/createForm">이벤트 추가</a></button>
 <ul>
@@ -11,12 +11,12 @@
   <li>
     <p>
       <%= JSON.stringify(row.title) %> | <%= format(row.date) %>
-      <!-- <button><a href="/events/<%= row.id %>/edit">수정</a></button>
-      <button><a href="/events/<%= row.id %>/delete">삭제</a></button> -->
+      <button><a href="/events/<%= row.id %>/editForm">수정</a></button>
+      <button><a href="/events/<%= row.id %>/deleteForm">삭제</a></button>
       <button><a href="/events/<%= row.id %>/reader">QRreader</a></button>
     </p>
   </li>
   <% }) %>
 </ul>
 
-<%- include('./footer.ejs') %>
+<%- include('../footer.ejs') %>

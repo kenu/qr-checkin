@@ -1,0 +1,34 @@
+<%- include('../header.ejs') %>
+<h1>delete</h1>
+
+<p>정말 삭제하시겠습니까?</p>
+<button
+  id="button"
+  type="submit"
+  onclick="formDeleteRequest()"
+  data-eventId="<%= eventId %>"
+>
+  예
+</button>
+
+<a href="/events"><button>아니오</button></a>
+
+<%- include('../footer.ejs') %>
+
+<script>
+  function formDeleteRequest() {
+    const url = "/events/" + document.getElementById("button").dataset.eventid;
+    const req = new Request(url, {
+      method: "DELETE",
+      headers: new Headers({
+        "content-type": "application/json",
+      }),
+    });
+
+    fetch(req)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.redirectUrl) window.location.href = data.redirectUrl;
+      });
+  }
+</script>
