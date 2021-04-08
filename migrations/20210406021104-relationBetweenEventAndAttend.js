@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -8,13 +8,13 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.addConstraint("Attends", {
-      fields: ["eventId"],
-      type: "foreign key",
-      name: "event",
+    await queryInterface.addConstraint('Attends', {
+      fields: ['eventId'],
+      type: 'foreign key',
+      name: 'event',
       references: {
-        table: "Events",
-        field: "id",
+        table: 'Events',
+        field: 'id',
       },
     });
   },

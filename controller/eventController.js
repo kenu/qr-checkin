@@ -45,7 +45,7 @@ let eventController = {
       await Event.destroy({ where: { id: req.params.id } });
       res.send({ redirectUrl: '/events' });
     } catch (err) {
-      result = { success: false, message: err.message };
+      const result = { success: false, message: err.message };
       res.end(JSON.stringify(result));
     }
   },
@@ -73,10 +73,10 @@ let eventController = {
   },
 
   validateEventId: async (req, res, next) => {
-    event_count = await Event.count({ where: { id: parseInt(req.params.id) } });
-    if (event_count < 1) {
+    const eventCount = await Event.count({ where: { id: parseInt(req.params.id) } });
+    if (eventCount < 1) {
       res.status(400);
-      result = { success: false, message: 'Invalid EventId' };
+      const result = { success: false, message: 'Invalid EventId' };
       res.end(JSON.stringify(result));
     } else {
       next();

@@ -1,12 +1,12 @@
-const { Model } = require("sequelize");
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Attend extends Model {
     static associate(models) {
       // define association here
       this.belongsTo(models.Event, {
-        foreignKey: "eventId",
-        targetKey: "id",
+        foreignKey: 'eventId',
+        targetKey: 'id',
       });
     }
   }
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Attend",
+      modelName: 'Attend',
     }
   );
 
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       const result2 = await Attend.create(attend);
       return result2;
     } else {
-      throw new Error("Already registered!");
+      throw new Error('Already registered!');
     }
   };
 

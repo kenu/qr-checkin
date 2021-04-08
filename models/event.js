@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Event extends Model {
     /**
@@ -10,25 +10,25 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasMany(models.Attend, {
-        foreignKey: "eventId",
-        sourceKey: "id",
+        foreignKey: 'eventId',
+        sourceKey: 'id',
       });
     }
     getDateTimeFormatting() {
       function pad2(n) {
-        return n < 10 ? "0" + n : n;
+        return n < 10 ? '0' + n : n;
       }
 
       const dt = this.date;
       return (
         dt.getFullYear().toString() +
-        "-" +
+        '-' +
         pad2(dt.getMonth() + 1) +
-        "-" +
+        '-' +
         pad2(dt.getDate()) +
-        "T" +
+        'T' +
         pad2(dt.getHours()) +
-        ":" +
+        ':' +
         pad2(dt.getMinutes())
       );
     }
@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Event",
+      modelName: 'Event',
     }
   );
 

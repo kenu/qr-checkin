@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -11,9 +11,9 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    return queryInterface.bulkInsert("Events", [
+    return queryInterface.bulkInsert('Events', [
       {
-        title: "Dummy Event1",
+        title: 'Dummy Event1',
         date: new Date(),
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -28,6 +28,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    return queryInterface.bulkDelete("Events", null, {});
+    return queryInterface.bulkDelete('Events', null, {});
   },
 };
