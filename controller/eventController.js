@@ -1,9 +1,11 @@
-const Event = require("../models").Event;
+/*eslint-env es6*/
+const Event = require('../models').Event;
 
 let eventController = {
+
   index: async (req, res) => {
     const eventList = await Event.findAll();
-    res.render("event/list", { eventList: eventList });
+    res.render('event/list', { eventList: eventList });
   },
 
   create: async (req, res) => {
@@ -14,7 +16,7 @@ let eventController = {
     let result = {};
     try {
       result = await Event.create(record);
-      res.redirect("/events");
+      res.redirect('/events');
     } catch (err) {
       result = { success: false, message: err.message };
       res.end(JSON.stringify(result));
@@ -31,7 +33,7 @@ let eventController = {
       result = await Event.update(record, {
         where: { id: parseInt(req.params.id) },
       });
-      res.send({ redirectUrl: "/events" });
+      res.send({ redirectUrl: '/events' });
     } catch (err) {
       result = { success: false, message: err.message };
       res.end(JSON.stringify(result));
@@ -41,7 +43,7 @@ let eventController = {
   delete: async (req, res) => {
     try {
       await Event.destroy({ where: { id: req.params.id } });
-      res.send({ redirectUrl: "/events" });
+      res.send({ redirectUrl: '/events' });
     } catch (err) {
       result = { success: false, message: err.message };
       res.end(JSON.stringify(result));
@@ -49,13 +51,13 @@ let eventController = {
   },
 
   qrReader: (req, res) => {
-    res.render("reader", { eventId: req.params.id });
+    res.render('reader', { eventId: req.params.id });
   },
 
   editForm: async (req, res) => {
     let event = await Event.findOne({ where: { id: req.params.id } });
 
-    res.render("event/editForm", {
+    res.render('event/editForm', {
       id: event.id,
       title: event.title,
       datetime: event.getDateTimeFormatting(),
@@ -63,18 +65,18 @@ let eventController = {
   },
 
   createForm: (req, res) => {
-    res.render("event/createForm");
+    res.render('event/createForm');
   },
 
   deleteForm: async (req, res) => {
-    res.render("event/deleteForm", { eventId: req.params.id });
+    res.render('event/deleteForm', { eventId: req.params.id });
   },
 
   validateEventId: async (req, res, next) => {
     event_count = await Event.count({ where: { id: parseInt(req.params.id) } });
     if (event_count < 1) {
       res.status(400);
-      result = { success: false, message: "Invalid EventId" };
+      result = { success: false, message: 'Invalid EventId' };
       res.end(JSON.stringify(result));
     } else {
       next();

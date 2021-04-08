@@ -1,22 +1,23 @@
-const { decrypt } = require("../util/cryptoUtil");
-const Attend = require("../models").Attend;
+const { decrypt } = require('../util/cryptoUtil');
+const Attend = require('../models').Attend;
 
 let attendController = {
+
   index: async function (req, res) {
     const list = await Attend.findAll();
-    res.render("list", { list });
+    res.render('list', { list });
   },
 
   create: async function (req, res) {
     const data = decrypt(req.body.data);
     if (data) {
-      const row = data.split("|");
+      const row = data.split('|');
       console.log(row);
       if (row.length < 2) {
-        res.send({ success: false, message: "Login Again!" });
+        res.send({ success: false, message: 'Login Again!' });
         return;
       }
-      // event: process.env.EVENT_NAME || "202103os",
+      // event: process.env.EVENT_NAME || '202103os',
       const record = {
         eventId: parseInt(req.body.eventId),
         username: row[1],
@@ -30,7 +31,7 @@ let attendController = {
       }
       res.end(JSON.stringify(result));
     } else {
-      res.send({ success: false, message: "Invalid Data." });
+      res.send({ success: false, message: 'Invalid Data.' });
     }
   },
 };
