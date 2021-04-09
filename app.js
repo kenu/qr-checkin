@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
@@ -8,27 +8,30 @@ const bodyParser = require('body-parser');
 
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 
-const getDataUrl = require('./util/qrcodeUtil');
-const { decrypt } = require('./util/cryptoUtil');
-const Attend = require('./store/Attend.js');
+const rootRouter = require('./route/rootRouter');
+const attendRouter = require('./route/attendRouter');
+const eventRouter = require('./route/eventRouter');
 
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: '/return',
-  scope: ['email', 'profile']
-},
-function (accessToken, refreshToken, profile, cb) {
-  console.log('accessToken', accessToken);
-  // In this example, the user's Facebook profile is supplied as the user
-  // record.  In a production-quality application, the Facebook profile should
-  // be associated with a user record in the application's database, which
-  // allows for account linking and authentication with other identity
-  // providers.
-  return cb(null, profile);
-}));
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: '/return',
+      scope: ['email', 'profile'],
+    },
+    function (accessToken, refreshToken, profile, cb) {
+      console.log('accessToken', accessToken);
+      // In this example, the user's Facebook profile is supplied as the user
+      // record.  In a production-quality application, the Facebook profile should
+      // be associated with a user record in the application's database, which
+      // allows for account linking and authentication with other identity
+      // providers.
+      return cb(null, profile);
+    }
+  )
+);
 
 passport.serializeUser(function (user, cb) {
   cb(null, user);
@@ -37,7 +40,6 @@ passport.serializeUser(function (user, cb) {
 passport.deserializeUser(function (obj, cb) {
   cb(null, obj);
 });
-
 
 const app = express();
 
@@ -56,75 +58,32 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/', ensureLoggedIn(), async function (req, res) {
-  const data = (req.user) ? req.user.emails[0].value : '';
-  const url = await getDataUrl(data);
-  res.render('home', { user: req.user, dataurl: url });
-});
-
-app.get('/login',
-  function (req, res) {
-    res.render('login');
+// connect To DB and create tables if they does not exist.
+const models = require('./models');
+models.sequelize
+  .sync()
+  .then(() => {
+    console.log('DB connection success~!');
+  })
+  .catch((err) => {
+    console.error(err);
+    console.log('DB connection failed. Please make sure DB is running.');
+    process.exit();
   });
 
-app.get('/login/google',
-  passport.authenticate('google'));
+// Routes
+app.use('/', rootRouter);
+app.use('/attends', attendRouter);
+app.use('/events', eventRouter);
 
-app.get('/return',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function (req, res) {
-    res.redirect('/');
-  });
+/*
 
-app.get('/profile',
-  ensureLoggedIn(),
-  async function (req, res) {
-    const url = await getDataUrl(req.user.name);
-    res.render('profile', { user: req.user, dataurl: url });
-  }
-);
-
-app.post('/register',
-  async function (req, res) {
-    const data = decrypt(req.body.data);
-    if (data) {
-      const row = data.split('|');
-      console.log(row);
-      if (row.length < 2) {
-        res.send({ success: false, message: 'Login Again!' });
-        return;
-      }
-      const record = {
-        event: process.env.EVENT_NAME || '202103os',
-        username: row[1],
-        created: new Date(Number(row[0]))
-      }
-      let result = {};
-      try {
-        result = await Attend.save(record);
-      } catch (err) {
-        result = { success: false, message: err.message };
-      }
-      res.end(JSON.stringify(result));
-    } else {
-      res.send({ success: false, message: 'Invalid Data.' });
-    }
-  }
-);
-
-app.get('/logout', function (req, res) {
-  req.logout();
-  res.redirect('/');
+app.get('/profile', ensureLoggedIn(), async function (req, res) {
+  const url = await getDataUrl(req.user.name);
+  res.render('profile', { user: req.user, dataurl: url });
 });
 
-app.get('/reader', function (req, res) {
-  res.render('reader');
-});
-
-app.get('/Ilist', async function (req, res) {
-  const list = await Attend.findAll();
-  res.render('list', { list });
-});
+*/
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

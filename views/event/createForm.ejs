@@ -1,0 +1,13 @@
+<%- include('../header.ejs') %>
+<h1>create</h1>
+
+<form class="eventCreateForm" action="/events" method="post">
+  <label>Title</label>
+  <input type="text" name="title" value="" />
+  <label>Date</label>
+  <input type="datetime-local" name="datetime" value="" />
+  <button type="submit">Submit</button>
+</form>
+<a href="/events"><button>Back</button></a>
+
+<%- include('../footer.ejs') %>
